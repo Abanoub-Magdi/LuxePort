@@ -1,0 +1,74 @@
+<div class="container">
+  <div class="form-wrapper glass-panel">
+    <div class="form-header">
+      <h2>{{ isEditMode ? 'Edit Client Profile' : 'New Client Onboarding' }}</h2>
+      <p class="subtitle">Enter client details below</p>
+    </div>
+
+    <form [formGroup]="clientForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <!-- Name -->
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input id="name" type="text" formControlName="name" placeholder="e.g. John Doe">
+          <div class="error" *ngIf="clientForm.get('name')?.touched && clientForm.get('name')?.invalid">
+            Name is required
+          </div>
+        </div>
+
+        <!-- Company -->
+        <div class="form-group">
+          <label for="company">Company / Entity</label>
+          <input id="company" type="text" formControlName="company" placeholder="e.g. Doe Enterprises">
+          <div class="error" *ngIf="clientForm.get('company')?.touched && clientForm.get('company')?.invalid">
+            Company is required
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email">Email Address</label>
+          <input id="email" type="email" formControlName="email" placeholder="e.g. john@example.com">
+          <div class="error" *ngIf="clientForm.get('email')?.touched && clientForm.get('email')?.invalid">
+            Valid email is required
+          </div>
+        </div>
+
+        <!-- Net Worth -->
+        <div class="form-group">
+          <label for="netWorth">Net Worth (USD)</label>
+          <input id="netWorth" type="number" formControlName="netWorth" placeholder="e.g. 1000000">
+          <div class="error" *ngIf="clientForm.get('netWorth')?.touched && clientForm.get('netWorth')?.invalid">
+            Valid amount is required
+          </div>
+        </div>
+
+        <!-- Tier -->
+        <div class="form-group">
+          <label for="tier">Client Tier</label>
+          <select id="tier" formControlName="tier">
+            <option value="Gold">Gold</option>
+            <option value="Platinum">Platinum</option>
+            <option value="Black">Black</option>
+          </select>
+        </div>
+
+        <!-- Status -->
+        <div class="form-group">
+          <label for="status">Account Status</label>
+          <select id="status" formControlName="status">
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <a routerLink="/dashboard" class="btn-cancel">Cancel</a>
+        <button type="submit" class="btn-gold" [disabled]="clientForm.invalid">
+          {{ isEditMode ? 'Update Profile' : 'Create Profile' }}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

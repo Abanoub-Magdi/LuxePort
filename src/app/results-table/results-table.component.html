@@ -1,0 +1,65 @@
+<div class="container">
+  <header class="dashboard-header">
+    <div>
+      <h1>Client Portfolio</h1>
+      <p class="subtitle">Manage your high-net-worth relationships</p>
+    </div>
+    <a routerLink="/add-client" class="btn-gold">
+      <span class="material-icons">add</span> New Client
+    </a>
+  </header>
+
+  <div class="glass-panel table-container">
+    <table class="client-table">
+      <thead>
+        <tr>
+          <th>Client Name</th>
+          <th>Company</th>
+          <th>Tier</th>
+          <th>Net Worth</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients()">
+          <td>
+            <div class="client-info">
+              <div class="avatar">{{ client.name.charAt(0) }}</div>
+              <div class="details">
+                <span class="name">{{ client.name }}</span>
+                <span class="email">{{ client.email }}</span>
+              </div>
+            </div>
+          </td>
+          <td>{{ client.company }}</td>
+          <td>
+            <span class="tier-badge" [ngClass]="client.tier.toLowerCase()">
+              {{ client.tier }}
+            </span>
+          </td>
+          <td class="net-worth">{{ client.netWorth | currency:'USD':'symbol':'1.0-0' }}</td>
+          <td>
+            <span class="status-indicator" [class.active]="client.status === 'Active'"></span>
+            {{ client.status }}
+          </td>
+          <td class="actions">
+            <a [routerLink]="['/edit-client', client.id]" class="icon-btn edit" title="Edit">
+              <span class="material-icons">edit</span>
+            </a>
+            <button (click)="deleteClient(client.id)" class="icon-btn delete" title="Delete">
+              <span class="material-icons">delete_outline</span>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="clients().length === 0">
+          <td colspan="6" class="empty-state">
+            <span class="material-icons">folder_open</span>
+            <p>No clients found in your portfolio.</p>
+            <a routerLink="/add-client" class="link">Add your first client</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
